@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import { productList } from '../../redux/actions/productActions'
 const useStyle = makeStyles(theme => ({
     "product_wrapper": {
         marginTop: "30px",
@@ -135,228 +136,61 @@ const useStyle = makeStyles(theme => ({
 
 
     },
-
-
-
-
-
 }
 ))
 
 const NewArrivalsTab = () => {
     const style = useStyle()
+
+    const getProduct = useSelector(state => state.productlist)
+
+    const { loading, products, error } = getProduct
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(productList())
+
+    }, [])
+
     return (
-        <div className="row">
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
+
+        loading ? <div>Loading...</div> :
+            error ? <div>{error}</div> :
+                <div className="row">
+                    {
+                        products.map((product, key) => {
+                            return (
+                                <div className="col-lg-3 col-md-3 col-12" key={key}>
+                                    <div className={style.product_wrapper}>
+                                        <div className="thumbnail">
+                                            <Link to={"/shop/"+product.id} className="images_box">
+                                                <img src={product.productDisplayImage} alt="" />
+                                                <img src={product.productHoverImage} className="hover_image" alt="" />
+                                            </Link>
+                                            <span className="badge">
+                                                {product.badgeText}
+                                            </span>
+                                            <div className="product_actions">
+                                                <span className="wishList"><i className="far fa-heart"></i></span>
+                                                <span className="expand_product"><i className="fas fa-expand"></i></span>
+                                                <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
+                                            </div>
+                                            <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
+                                        </div>
+                                        <div className="productDesc">
+                                            <h4 className="text-capitalize primary_hreading text_orange">
+                                                <Link to={"/shop/"+product.id} className="hover_text">{product.productName}</Link>
+                                            </h4>
+                                            <span className="price">{product.productPrice}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-lg-3 col-md-3 col-12">
-                <div className={style.product_wrapper}>
-                    <div className="thumbnail">
-                        <Link to="/" className="images_box">
-                            <img src="/images/product5.png" alt="" />
-                            <img src="/images/product8.png" className="hover_image" alt="" />
-                        </Link>
-                        <span className="badge">
-                            New
-                        </span>
-                        <div className="product_actions">
-                            <span className="wishList"><i className="far fa-heart"></i></span>
-                            <span className="expand_product"><i className="fas fa-expand"></i></span>
-                            <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
-                        </div>
-                        <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
-                    </div>
-                    <div className="productDesc">
-                        <h4 className="text-capitalize primary_hreading text_orange">
-                            <Link to="/" className="hover_text">blue dress For Woman</Link>
-                        </h4>
-                        <span className="price">$38.50</span>
-                    </div>
-                </div>
-            </div>
 
 
-        </div>
     )
 }
 

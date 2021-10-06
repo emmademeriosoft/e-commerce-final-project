@@ -13,7 +13,7 @@ const App = () => {
                 <Navbar />
                 <Switch >
                     < Route exact path="/" component={Home} />
-                    < Route path="/shop" component={Shop} />
+                    < Route path="/shop/:id" component={Shop} />
                     <Route path="/cart" component={Cart} />
                 </Switch >
                 <Footer />
