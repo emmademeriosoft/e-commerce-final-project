@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core'
 
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const useStyle = makeStyles(theme => ({
     "mobile_menu": {
@@ -20,7 +21,7 @@ const useStyle = makeStyles(theme => ({
         width: '300px',
         overflowX: 'hidden',
 
-        '@media (min-width: 576px)':{
+        '@media (min-width: 576px)': {
             width: '400px',
         },
 
@@ -81,7 +82,7 @@ const useStyle = makeStyles(theme => ({
             "& address": {
                 marginTop: '30px',
                 color: '#FFF',
-                "& span":{
+                "& span": {
                     display: 'block',
                 }
             },
@@ -118,6 +119,10 @@ const useStyle = makeStyles(theme => ({
 const Navbar = () => {
     const style = useStyle()
     const [sideMEnu, setSideMEnu] = useState(false)
+    const getCart = useSelector(state => state.getCartItem)
+    const { cartItem } = getCart
+    const getWishList = useSelector(state => state.getWishList)
+    const { wishList } = getWishList
 
     const navMenu = [
         {
@@ -349,9 +354,11 @@ const Navbar = () => {
                         <ul>
                             <li>
                                 <i className="far fa-heart"></i>
+                                <span>{wishList.length !== 0 && wishList.length}</span>
                             </li>
                             <li>
                                 <i className="fas fa-shopping-cart"></i>
+                                <span>{cartItem.length !== 0 && cartItem.reduce((a, c) => a + Number(c.quantity), 0)}</span>
                             </li>
                             <li>
                                 <i className="fas fa-search"></i>
