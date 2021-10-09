@@ -1,12 +1,14 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core'
 
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { deleteFromCart } from '../redux/actions/cartAction'
 
 const useStyle = makeStyles(theme => ({
-    "mobile_menu": {
+    "side_menu": {
         zIndex: 999999,
         position: 'fixed',
         top: 0,
@@ -17,9 +19,49 @@ const useStyle = makeStyles(theme => ({
         transition: 'all 0.5s ease',
         transform: 'translateX(100%)',
         boxShadow: 'none',
-        background: 'var(--main-menu-text)',
         width: '300px',
         overflowX: 'hidden',
+        "&.nav_menu": {
+            background: 'var(--main-menu-text)',
+        },
+        "&.cart_menu": {
+            background: 'var(--white)',
+            "& li": {
+                boxShadow: '0px 0px 6px 1px #c9c7c7',
+                marginBottom: '15px',
+                position: 'relative',
+                "& .item_action": {
+                    position: 'absolute',
+                    top: '0',
+                    right: '0',
+                    "& i": {
+                        padding: '10px 10px',
+                        borderLeft: '1px solid var(--main-theme-color)',
+                        borderBottom: '1px solid var(--main-theme-color)',
+                        color: 'var(--main-theme-color)',
+                        transition: 'all 0.4s ease-in-out',
+
+                        "&:hover": {
+
+                            color: 'white',
+                            backgroundColor: 'var(--main-theme-color)',
+                        }
+                    }
+                }
+            },
+        },
+        "& .mob_main_menu_wrapper": {
+            "& .item_detail": {
+                display: 'flex',
+                alignItems: 'center',
+                "& a.thumbnail_img": {
+                    width: '90px',
+                    overflow: 'hidden',
+                    border: '1px solid #ededed',
+                    marginRight: '20px',
+                }
+            }
+        },
 
         '@media (min-width: 576px)': {
             width: '400px',
@@ -118,11 +160,18 @@ const useStyle = makeStyles(theme => ({
 
 const Navbar = () => {
     const style = useStyle()
-    const [sideMEnu, setSideMEnu] = useState(false)
+    const [sideMenu, setSideMenu] = useState(false)
+    const [cartMenu, setCartMenu] = useState(false)
+    const [wishListBar, setWishListBar] = useState(false)
     const getCart = useSelector(state => state.getCartItem)
     const { cartItem } = getCart
     const getWishList = useSelector(state => state.getWishList)
     const { wishList } = getWishList
+    const dispatch = useDispatch()
+
+    const delCartHandler = (productId) => {
+        dispatch(deleteFromCart(productId))
+    }
 
     const navMenu = [
         {
@@ -353,32 +402,38 @@ const Navbar = () => {
                     <div className="header-action">
                         <ul>
                             <li>
-                                <i className="far fa-heart"></i>
-                                <span>{wishList.length !== 0 && wishList.length}</span>
+                                <div className="hover_text" onClick={() => setWishListBar(true)}>
+                                    <i className="far fa-heart"></i>
+                                    {wishList.length !== 0 &&
+                                        <span>{wishList.length}</span>
+                                    }
+                                </div>
                             </li>
                             <li>
-                                <i className="fas fa-shopping-cart"></i>
-                                <span>{cartItem.length !== 0 && cartItem.reduce((a, c) => a + Number(c.quantity), 0)}</span>
+                                <div className="hover_text" onClick={() => setCartMenu(true)}>
+                                    <i className="fas fa-shopping-cart"></i>
+                                    {cartItem.length !== 0 &&
+                                        <span>{cartItem.reduce((a, c) => a + Number(c.quantity), 0)}</span>
+                                    }
+                                </div>
                             </li>
                             <li>
                                 <i className="fas fa-search"></i>
                             </li>
                             <li>
-                                <Link to="/" className="offside-about hover_text" onClick={() => setSideMEnu(true)}>
+                                <div className="offside-about hover_text" onClick={() => setSideMenu(true)}>
 
                                     <i className="fas fa-bars"></i>
-                                </Link>
+                                </div>
                             </li>
                         </ul>
 
                     </div>
                 </div>
             </header>
-
-
-            <div className={sideMEnu ? "mobile_menu_open " + style.mobile_menu : style.mobile_menu}>
+            <div className={sideMenu ? "mobile_menu_open nav_menu " + style.side_menu : style.side_menu + " nav_menu"}>
                 <div className="menu_slide_off text-end mb-5">
-                    <button className="menu_close_button" onClick={() => setSideMEnu(false)}>
+                    <button className="menu_close_button" onClick={() => setSideMenu(false)}>
                         <i className="fas fa-times"></i>
                     </button>
                 </div>
@@ -434,6 +489,85 @@ const Navbar = () => {
                 </div>
             </div>
 
+
+            <div className={cartMenu ? style.side_menu + " mobile_menu_open cart_menu" : style.side_menu + " cart_menu"}>
+                <div className="menu_slide_off text-end mb-5">
+                    <button className="menu_close_button" onClick={() => setCartMenu(false)}>
+                        <i className="fas fa-times"></i>
+                    </button>
+                </div>
+                <div className="mob_main_menu_wrapper">
+                    <div className="">
+                        <ul>
+                            {
+                                cartItem.map((v, k) => {
+                                    return (
+                                        <li key={k}>
+                                            <div className="item_detail">
+                                                <Link to="/" className="thumbnail_img">
+                                                    <img src={v.displayImage} alt="" />
+                                                </Link>
+                                                <div className="item_content">
+                                                    <Link to={"/shop/" + v.id} className="hover_text">
+                                                        {v.name}
+                                                    </Link>
+                                                    <div className="item_cart_detail">
+                                                        <span className="item_qty">{v.quantity}</span>
+                                                        <span className="item_qty"> X </span>
+                                                        <span className="item_qty">Rs {v.price}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div onClick={() => delCartHandler(v.id)} className="item_action">
+                                                <i className="fas fa-trash"></i>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div className={wishListBar ? style.side_menu + " mobile_menu_open cart_menu" : style.side_menu + " cart_menu"}>
+                <div className="menu_slide_off text-end mb-5">
+                    <button className="menu_close_button" onClick={() => setWishListBar(false)}>
+                        <i className="fas fa-times"></i>
+                    </button>
+                </div>
+                <div className="mob_main_menu_wrapper">
+                    <div className="">
+                        <ul>
+                            {
+                                wishList.map((v, k) => {
+                                    return (
+                                        <li key={k}>
+                                            <div className="item_detail">
+                                                <Link to="/" className="thumbnail_img">
+                                                    <img src={v.displayImage} alt="" />
+                                                </Link>
+                                                <div className="item_content">
+                                                    <Link to={"/shop/" + v.id} className="hover_text">
+                                                        {v.name}
+                                                    </Link>
+                                                    <div className="item_cart_detail">
+                                                        <span className="item_qty">Rs {v.price}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div onClick={() => delCartHandler(v.id)} className="item_action">
+                                                <i className="fas fa-trash"></i>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

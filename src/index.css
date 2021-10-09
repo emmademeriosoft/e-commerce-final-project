@@ -147,6 +147,7 @@ transition: transform 1s, filter 0.5s ease-out;
 
 .hover_text{
     color: var(--main-menu-text);
+    cursor: pointer;
 }
 .hover_text:hover{
     color: var(--main-theme-color) !important;
@@ -242,7 +243,26 @@ nav{
 
 .header-action li {
     margin-right: 20px;
+    font-size: 21px;
+    position: relative;
+    letter-spacing: -6px;
+    cursor: pointer;
 }
+
+.header-action li span{
+    display: inline-block;
+    font-size: 11px;
+    background: var(--main-theme-color);
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0;
+    font-weight: 600;
+}
+
 
 .offside-about {
     width: 50px;

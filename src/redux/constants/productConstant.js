@@ -9,5 +9,7 @@ export const PRODUCT_DETAIL_FAIL = 'PRODUCT_DETAIL_FAIL';
 
 
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const DELETE_FROM_CART = 'DELETE_FROM_CART';
+
 export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
 

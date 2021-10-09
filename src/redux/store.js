@@ -5,6 +5,14 @@ import { productDetailReducer, productlistReducer } from './reducers/productRedu
 import { getWishListReducer } from './reducers/wishListReducer';
 
 
+const initialState = {
+    getCartItem: {
+        cartItem: localStorage.getItem('cartItem') ? JSON.parse(localStorage.getItem('cartItem')) : []
+    },
+    getWishList: {
+        wishList: localStorage.getItem('wishList') ? JSON.parse(localStorage.getItem('wishList')) : []
+    },
+}
 
 
 const my_reducer = combineReducers({
@@ -16,6 +24,7 @@ const my_reducer = combineReducers({
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
     my_reducer,
+    initialState,
     composeEnhancer(applyMiddleware(thunk))
 )
 export default store;
