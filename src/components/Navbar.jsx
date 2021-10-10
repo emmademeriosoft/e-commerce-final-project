@@ -26,7 +26,7 @@ const useStyle = makeStyles(theme => ({
         },
         "&.cart_menu": {
             background: 'var(--white)',
-            "& li": {
+            "& li:not(:last-child)": {
                 boxShadow: '0px 0px 6px 1px #c9c7c7',
                 marginBottom: '15px',
                 position: 'relative',
@@ -504,7 +504,7 @@ const Navbar = () => {
                                     return (
                                         <li key={k}>
                                             <div className="item_detail">
-                                                <Link to="/" className="thumbnail_img">
+                                                <Link to={"/shop/" + v.id} className="thumbnail_img">
                                                     <img src={v.displayImage} alt="" />
                                                 </Link>
                                                 <div className="item_content">
@@ -526,6 +526,9 @@ const Navbar = () => {
                                 })
 
                             }
+                            <Link to="/cart" className="primary_button bg_black btn_md  w-100 text-center">
+                                View Cart
+                            </Link>
                         </ul>
                     </div>
                 </div>
@@ -544,7 +547,7 @@ const Navbar = () => {
                                     return (
                                         <li key={k}>
                                             <div className="item_detail">
-                                                <Link to="/" className="thumbnail_img">
+                                                <Link to={"/shop/" + v.id} className="thumbnail_img">
                                                     <img src={v.displayImage} alt="" />
                                                 </Link>
                                                 <div className="item_content">
@@ -563,7 +566,14 @@ const Navbar = () => {
                                     )
                                 })
 
+
+
                             }
+                            <li>
+                                <Link to="/" className="primary_button bg_black btn_md  w-100 text-center">
+                                    View Wishlist
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

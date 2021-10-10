@@ -60,7 +60,7 @@ const SingleProduct = ({ productId }) => {
     const cartHandler = () => {
         dispatch(addToCart(productId, quantity))
     }
-    const wishListHandler = () =>{
+    const wishListHandler = () => {
         dispatch(addToWishList(productId))
     }
 
@@ -121,11 +121,11 @@ const SingleProduct = ({ productId }) => {
                                             </div>
                                             <div className="products_link mt-4">
                                                 <div className="product_actions">
-                                                    <span onClick={wishListHandler}  className="hover_text me-3">
+                                                    <span onClick={wishListHandler} className="hover_text me-3">
                                                         <i className="far fa-heart"></i>
                                                         Add to wich list
                                                     </span>
-                                                    <span  className="hover_text">
+                                                    <span className="hover_text">
                                                         <i className="fas fa-exchange-alt"></i>
                                                         Add To Compare
                                                     </span>

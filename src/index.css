@@ -358,3 +358,8 @@ nav{
     color: #000 !important;
 }
 
+button {
+    outline: none;
+    border: 0px;
+}
+
