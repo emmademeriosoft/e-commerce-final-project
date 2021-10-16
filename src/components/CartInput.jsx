@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../redux/actions/cartAction'
 const useStyle = makeStyles(theme => ({
     "product_qty_input": {
 
@@ -17,7 +19,7 @@ const useStyle = makeStyles(theme => ({
             background: '#fff',
             borderColor: '#ddd',
             border: '1px solid #ddd',
-            width: '20%',
+            // width: '20%',
             minHeight: '40px',
             borderRadius: 0,
             margin: '0 8px',
@@ -25,9 +27,14 @@ const useStyle = makeStyles(theme => ({
         }
     }
 }))
-const CartInput = () => {
+const CartInput = ({ qty, productId }) => {
     const style = useStyle()
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(Number(qty))
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(addToCart(productId, quantity))
+
+    }, [quantity])
     return (
         <div className={style.product_qty_input + " mt-3 d-flex align-items-center justify-content-center"} >
             <button onClick={() => setQuantity(quantity + 1)}><i className="fas fa-plus"></i></button>

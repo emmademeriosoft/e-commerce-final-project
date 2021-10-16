@@ -399,10 +399,10 @@ const Navbar = () => {
                             </ul>
                         </nav>
                     </div>
-                    <div className="header-action">
+                    <div className="header-action d-flex">
                         <ul>
                             <li>
-                                <div className="hover_text" onClick={() => setWishListBar(true)}>
+                                <div className="hover_text d-flex" onClick={() => setWishListBar(true)}>
                                     <i className="far fa-heart"></i>
                                     {wishList.length !== 0 &&
                                         <span>{wishList.length}</span>
@@ -410,7 +410,7 @@ const Navbar = () => {
                                 </div>
                             </li>
                             <li>
-                                <div className="hover_text" onClick={() => setCartMenu(true)}>
+                                <div className="hover_text d-flex" onClick={() => setCartMenu(true)}>
                                     <i className="fas fa-shopping-cart"></i>
                                     {cartItem.length !== 0 &&
                                         <span>{cartItem.reduce((a, c) => a + Number(c.quantity), 0)}</span>

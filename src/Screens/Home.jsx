@@ -14,7 +14,7 @@ const Home = () => {
             <HotProducts />
             <OfferTimmer />
             <TodaysDeals />
-            <Trending/>
+            <Trending />
         </>
     )
 }

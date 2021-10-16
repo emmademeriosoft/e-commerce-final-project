@@ -2,7 +2,9 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addToCart } from '../../redux/actions/cartAction'
 import { productList } from '../../redux/actions/productActions'
+import { addToWishList, removeFromWishList } from '../../redux/actions/wishListAction'
 const useStyle = makeStyles(theme => ({
     "product_wrapper": {
         marginTop: "30px",
@@ -62,6 +64,8 @@ const useStyle = makeStyles(theme => ({
                 transition: 'all 0.3s ease 0s',
                 "& span": {
 
+
+
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -74,6 +78,11 @@ const useStyle = makeStyles(theme => ({
                     backgroundColor: '#fff',
                     margin: '5px 0px',
                     cursor: 'pointer',
+
+                    "&.alreadyExist": {
+                        color: '#fff',
+                        backgroundColor: '#ff7004',
+                    },
                     "&:hover": {
                         color: '#fff',
                         backgroundColor: '#ff7004',
@@ -141,17 +150,26 @@ const useStyle = makeStyles(theme => ({
 
 const NewArrivalsTab = () => {
     const style = useStyle()
-
+    const getWishList = useSelector(state => state.getWishList)
     const getProduct = useSelector(state => state.productlist)
-
+    const { wishList } = getWishList
     const { loading, products, error } = getProduct
-
     const dispatch = useDispatch()
+    const wishListHandler = (productId,existWishList) => {
+        // if(existWishList){
+
+        //     dispatch(removeFromWishList(productId))
+        // }else{
+
+        //     dispatch(addToWishList(productId))
+        // }
+        console.log(existWishList)
+    }
     useEffect(() => {
         dispatch(productList())
 
     }, [])
-
+    var productExistWishList = '';
     return (
 
         loading ? <div>Loading...</div> :
@@ -159,11 +177,14 @@ const NewArrivalsTab = () => {
                 <div className="row">
                     {
                         products.map((product, key) => {
+
+                            wishList.find(x => x.id == product.id) ? productExistWishList = true : productExistWishList = false
+                            console.log(productExistWishList)
                             return (
                                 <div className="col-lg-3 col-md-3 col-12" key={key}>
                                     <div className={style.product_wrapper}>
                                         <div className="thumbnail">
-                                            <Link to={"/shop/"+product.id} className="images_box">
+                                            <Link to={"/shop/" + product.id} className="images_box">
                                                 <img src={product.productDisplayImage} alt="" />
                                                 <img src={product.productHoverImage} className="hover_image" alt="" />
                                             </Link>
@@ -171,7 +192,8 @@ const NewArrivalsTab = () => {
                                                 {product.badgeText}
                                             </span>
                                             <div className="product_actions">
-                                                <span className="wishList"><i className="far fa-heart"></i></span>
+
+                                                <span onClick={() => wishListHandler(product.id,productExistWishList) } className={productExistWishList ? "wishList alreadyExist": "wishList"}><i className="far fa-heart"></i></span>
                                                 <span className="expand_product"><i className="fas fa-expand"></i></span>
                                                 <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
                                             </div>
@@ -179,7 +201,7 @@ const NewArrivalsTab = () => {
                                         </div>
                                         <div className="productDesc">
                                             <h4 className="text-capitalize primary_hreading text_orange">
-                                                <Link to={"/shop/"+product.id} className="hover_text">{product.productName}</Link>
+                                                <Link to={"/shop/" + product.id} className="hover_text">{product.productName}</Link>
                                             </h4>
                                             <span className="price">{product.productPrice}</span>
                                         </div>
