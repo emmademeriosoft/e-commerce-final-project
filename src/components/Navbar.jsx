@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { deleteFromCart } from '../redux/actions/cartAction'
+import { removeFromWishList } from '../redux/actions/wishListAction'
 
 const useStyle = makeStyles(theme => ({
     "side_menu": {
@@ -26,7 +27,7 @@ const useStyle = makeStyles(theme => ({
         },
         "&.cart_menu": {
             background: 'var(--white)',
-            "& li:not(:last-child)": {
+            "& li": {
                 boxShadow: '0px 0px 6px 1px #c9c7c7',
                 marginBottom: '15px',
                 position: 'relative',
@@ -171,6 +172,10 @@ const Navbar = () => {
 
     const delCartHandler = (productId) => {
         dispatch(deleteFromCart(productId))
+    }
+
+    const delWishListHandler = (productId) =>{
+        dispatch(removeFromWishList(productId))
     }
 
     const navMenu = [
@@ -559,7 +564,7 @@ const Navbar = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div onClick={() => delCartHandler(v.id)} className="item_action">
+                                            <div onClick={() => delWishListHandler(v.id)} className="item_action">
                                                 <i className="fas fa-trash"></i>
                                             </div>
                                         </li>
@@ -569,11 +574,6 @@ const Navbar = () => {
 
 
                             }
-                            <li>
-                                <Link to="/" className="primary_button bg_black btn_md  w-100 text-center">
-                                    View Wishlist
-                                </Link>
-                            </li>
                         </ul>
                     </div>
                 </div>

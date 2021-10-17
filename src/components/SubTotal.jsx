@@ -63,7 +63,7 @@ const SubTotal = () => {
                 </div>
                 <div className="checkoutButton">
                     <Link to="/cart" className="primary_button bg_black btn_md  w-100 text-center">
-                        View Cart
+                        Check Out
                     </Link>
                 </div>
             </div>

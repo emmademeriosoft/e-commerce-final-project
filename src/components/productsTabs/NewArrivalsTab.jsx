@@ -156,20 +156,22 @@ const NewArrivalsTab = () => {
     const { loading, products, error } = getProduct
     const dispatch = useDispatch()
     const wishListHandler = (productId,existWishList) => {
-        // if(existWishList){
+        if(existWishList){
 
-        //     dispatch(removeFromWishList(productId))
-        // }else{
+            dispatch(removeFromWishList(productId))
+        }else{
 
-        //     dispatch(addToWishList(productId))
-        // }
-        console.log(existWishList)
+            dispatch(addToWishList(productId))
+        }
+    }
+
+    const cartHandler = (productId) => {
+        dispatch(addToCart(productId, 1))
     }
     useEffect(() => {
         dispatch(productList())
 
     }, [])
-    var productExistWishList = '';
     return (
 
         loading ? <div>Loading...</div> :
@@ -177,9 +179,9 @@ const NewArrivalsTab = () => {
                 <div className="row">
                     {
                         products.map((product, key) => {
+                            var productExistWishList = 0;
 
-                            wishList.find(x => x.id == product.id) ? productExistWishList = true : productExistWishList = false
-                            console.log(productExistWishList)
+                            wishList.find(x => x.id === product.id) ? productExistWishList = 1 : productExistWishList = 0
                             return (
                                 <div className="col-lg-3 col-md-3 col-12" key={key}>
                                     <div className={style.product_wrapper}>
@@ -197,7 +199,7 @@ const NewArrivalsTab = () => {
                                                 <span className="expand_product"><i className="fas fa-expand"></i></span>
                                                 <span className="exchange_product"><i className="fas fa-exchange-alt"></i></span>
                                             </div>
-                                            <Link className="add_to_cart_btn text-uppercase bg_black" to="/" >add to cart</Link>
+                                            <button onClick={()=>cartHandler(product.id)} className="add_to_cart_btn text-uppercase bg_black" to="/" >Add To Cart</button>
                                         </div>
                                         <div className="productDesc">
                                             <h4 className="text-capitalize primary_hreading text_orange">
