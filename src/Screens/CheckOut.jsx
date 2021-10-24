@@ -1,11 +1,11 @@
 import { Box, Step, StepLabel, Stepper, Typography, Button, Container, Paper } from '@material-ui/core';
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import { makeStyles } from '@material-ui/styles'
 import StepperIcon from '../components/StepperIcon';
 import InformationForm from '../components/InformationForm';
 
 
-const steps = ['Cart', 'Information', 'Payment'];
+const steps = ['Information', 'Payment'];
 const useStyles = makeStyles({
   "checkout_wrapper": {
     marginTop: "90px",
@@ -15,13 +15,10 @@ const useStyles = makeStyles({
 const StepContent = ({ step }) => {
   switch (step) {
     case 0:
-      return <InformationForm/>
+      return <InformationForm />
       break;
     case 1:
-      return <InformationForm/>
-      break;
-    case 2:
-      return <h1>step 3 mine</h1>
+      return <h1>step 2 mine</h1>
       break;
     default:
       return <></>;

@@ -35,9 +35,8 @@ const StepperIcon = props => {
     const { active, completed } = props;
 
     const icons = {
-        1: <ContactMail />,
-        2: <Info />,
-        3: <Payment />,
+        1: <Info />,
+        2: <Payment />,
     };
     return (
         <div

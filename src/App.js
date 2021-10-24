@@ -5,6 +5,9 @@ import Cart from "./Screens/Cart";
 import CheckOut from "./Screens/CheckOut";
 import Home from "./Screens/Home";
 import Shop from "./Screens/Shop";
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'bootstrap/dist/css/bootstrap-utilities.min.css';
+
 
 
 const App = () => {
