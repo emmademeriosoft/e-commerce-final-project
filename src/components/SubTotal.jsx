@@ -62,8 +62,8 @@ const SubTotal = () => {
                     <p>Rs {(total_amount + 40 + 100).toLocaleString()}</p>
                 </div>
                 <div className="checkoutButton">
-                    <Link to="/cart" className="primary_button bg_black btn_md  w-100 text-center">
-                        Check Out
+                    <Link to="/checkout" className="primary_button bg_black btn_md  w-100 text-center">
+                        Proceed
                     </Link>
                 </div>
             </div>
