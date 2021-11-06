@@ -39,6 +39,7 @@ const SubTotal = () => {
 
 
     const total_amount = cartItem.reduce((a, c) => a + (Number(c.quantity) * Number(c.price)), 0)
+    localStorage.setItem('totalCart', total_amount+100+40)
 
     return (
         <div className={style.cart_details}>

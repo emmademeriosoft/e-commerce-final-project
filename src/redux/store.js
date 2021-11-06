@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 import { cartReducer } from './reducers/cartReducer';
 import { productDetailReducer, productlistReducer } from './reducers/productReducer'
 import { getWishListReducer } from './reducers/wishListReducer';
+import { stepperReducer } from './reducers/stepperReducer';
+import { formReducer } from './reducers/formReducer';
 
 
 const initialState = {
@@ -20,6 +22,8 @@ const my_reducer = combineReducers({
     productDetail: productDetailReducer,
     getCartItem: cartReducer,
     getWishList: getWishListReducer,
+    fromCount: stepperReducer,
+    fromData: formReducer,
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
